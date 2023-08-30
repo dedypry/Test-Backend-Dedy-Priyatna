@@ -1,7 +1,6 @@
 const {Model} = require('objection');
 const knex = require('./knex');
 const objectionSoftDelete = require('objection-js-soft-delete');
-// const userRoleModel = require('./userRole');
 
 Model.knex(knex);
 
@@ -17,7 +16,7 @@ const softDelete = objectionSoftDelete.default({
 /**
  * @extends Model
  */
-class ModuleModel extends softDelete(Model) {
+class GuestModel extends softDelete(Model) {
   /**
    * create action before insert in database
    */
@@ -37,27 +36,23 @@ class ModuleModel extends softDelete(Model) {
    * @return {string} The table name
    */
   static get tableName() {
-    return 'modules';
+    return 'guest';
   }
 
-  static modifiers = {
-    /**
-     * Return minimum column
-     * @param  {any} query
-     */
-
-  };
+  static get modifiers() {
+    return {
+      listDefault(query) {
+        query.select(
+            'id',
+            'nama',
+            'catatan',
+        );
+      },
+    };
+  }
 
 
   static table = this.tableName;
-
-  /**
-   * Define relation
-   * @return {Object}
-   */
-  static relationMappings() {
-    return {};
-  }
 }
 
-module.exports = ModuleModel;
+module.exports = GuestModel;

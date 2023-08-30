@@ -1,13 +1,11 @@
 
 exports.up = async function(knex) {
-  await knex.schema.createTable('role_module', (table)=> {
+  await knex.schema.createTable('guest', (table) => {
     table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
-    table.uuid('module_id');
-    table.uuid('role_id');
-    table.boolean('create').defaultTo(false);
-    table.boolean('read').defaultTo(false);
-    table.boolean('update').defaultTo(false);
-    table.boolean('delete').defaultTo(false);
+    table.string('nama', 100);
+    table.string('alamat');
+    table.string('telp', 14);
+    table.text('catatan');
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
     table.timestamp('deleted_at');

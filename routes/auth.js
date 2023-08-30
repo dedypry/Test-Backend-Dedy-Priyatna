@@ -4,14 +4,11 @@ const version = process.env.VERSION_CONTROL || 'v1';
 
 const authController = require('../app/http/controllers/authController');
 const {handlerException} = require('../app/exceptions/handler');
-const {loginValidation, signupValidation} = require('../app/validations/authValidation');
-const {auth} = require('../app/http/middleware/auth');
+const {loginValidation} = require('../app/validations/authValidation');
 
 
 /* GET home page. */
 routes.group('/api/'+version+'/auth', (router)=> {
-  router.post('/signup', handlerException(signupValidation), handlerException(authController.signUp));
   router.post('/login', handlerException(loginValidation), handlerException(authController.login));
-  router.get('/', auth(), handlerException(authController.getUser));
 });
 module.exports = routes;
